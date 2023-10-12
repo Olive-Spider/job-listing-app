@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Models\Listing;
+use PhpParser\Node\Expr\List_;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,20 +15,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// All listings
 Route::get('/', function () {
     return view('listings', [
         'heading' => 'Latest Listings',
-        'listings' => [
-            [
-                'id' => 1,
-                'title' => 'Listing One',
-                'description' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad aspernatur incidunt, ipsam reiciendis minima voluptatibus error nostrum maxime. Vel, vero officiis ab veniam enim est accusamus nemo unde quidem ipsum?'
-            ],
-            [
-                'id' => 2,
-                'title' => 'Listing Two',
-                'description' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad aspernatur incidunt, ipsam reiciendis minima voluptatibus error nostrum maxime. Vel, vero officiis ab veniam enim est accusamus nemo unde quidem ipsum?'
-            ]
-        ]
+        'listings' => Listing::all()
+    ]);
+});
+
+// Single listing
+
+Route::get('/listings/{id}', function($id) {
+    return view('listing', [
+        'listing' => Listing::find($id)
     ]);
 });
